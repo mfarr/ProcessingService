@@ -12,6 +12,6 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProcessingServiceApi\ProcessingServiceApi.csproj" />
+    <ProjectReference Include="..\..\src\ProcessingService.Api\ProcessingService.Api.csproj" />
   </ItemGroup>
 </Project>

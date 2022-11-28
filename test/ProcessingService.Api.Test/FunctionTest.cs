@@ -2,7 +2,7 @@ using Xunit;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.TestUtilities;
 
-namespace ProcessingServiceApi.Tests;
+namespace ProcessingService.Api.Test;
 
 public class FunctionTest
 {

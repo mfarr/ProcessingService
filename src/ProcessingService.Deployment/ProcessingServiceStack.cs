@@ -1,7 +1,7 @@
 using Amazon.CDK;
 using Constructs;
 
-namespace ProcessingService
+namespace ProcessingService.Deployment
 {
     public class ProcessingServiceStack : Stack
     {
