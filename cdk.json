@@ -1,5 +1,5 @@
 {
-  "app": "dotnet run --project src/ProcessingService/ProcessingService.csproj",
+  "app": "dotnet run --project src/ProcessingService.Deployment/ProcessingService.Deployment.csproj",
   "watch": {
     "include": [
       "**"
