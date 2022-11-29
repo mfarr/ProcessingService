@@ -17,4 +17,8 @@
     -->
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ProcessingService.Common\ProcessingService.Common.csproj" />
+  </ItemGroup>
+
 </Project>
