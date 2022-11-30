@@ -8,7 +8,16 @@ namespace ProcessingService.Deployment
         {
             var app = new App();
             
-            new ProcessingServiceStack(app, "ProcessingServiceStack", new StackProps
+            var dataStack = new ProcessingServiceDataStack(app, "ProcessingServiceDataStack", new StackProps
+            {
+                Env = new Environment
+                {
+                    Account = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_ACCOUNT"),
+                    Region = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_REGION")
+                }
+            });
+            
+            var serviceStack = new ProcessingServiceStack(app, "ProcessingServiceStack", dataStack, new StackProps
             {
                 // If you don't specify 'env', this stack will be environment-agnostic.
                 // Account/Region-dependent features and context lookups will not work,
@@ -35,15 +44,6 @@ namespace ProcessingService.Deployment
                 // For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
             });
 
-            new ProcessingServiceDataStack(app, "ProcessingServiceDataStack", new StackProps
-            {
-                Env = new Environment
-                {
-                    Account = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_ACCOUNT"),
-                    Region = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_REGION")
-                }
-            });
-            
             app.Synth();
         }
     }

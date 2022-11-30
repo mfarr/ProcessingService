@@ -8,10 +8,13 @@ namespace ProcessingService.Deployment;
 
 public class ProcessingServiceDataStack : Stack
 {
+    public readonly Table OrganizationScheduleTable;
+    
     internal ProcessingServiceDataStack(Construct scope, string id, IStackProps props) : base(scope, id, props)
     {
-        var organizationScheduleTable = new Table(this, OrganizationSchedule.TableName, new TableProps
+        OrganizationScheduleTable = new Table(this, "OrganizationScheduleTable", new TableProps
         {
+            TableName = OrganizationSchedule.TableName,
             PartitionKey = new Attribute { Name = OrganizationSchedule.PartitionKey, Type = AttributeType.STRING },
             SortKey = new Attribute { Name = OrganizationSchedule.SortKey, Type = AttributeType.STRING }
         });
