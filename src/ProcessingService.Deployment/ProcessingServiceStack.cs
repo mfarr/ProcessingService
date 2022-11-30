@@ -21,7 +21,7 @@ namespace ProcessingService.Deployment
             apiLamdbaFunction.AddToRolePolicy(new PolicyStatement(new PolicyStatementProps
             {
                 Actions = new []{ "dynamodb:Scan", "dynamodb:DescribeTable" },
-                Resources = new [] { dataStack.OrganizationScheduleTable.TableArn }
+                Resources = new [] { dataStack.OrganizationScheduleTable.TableArn, dataStack.JobRunLogTable.TableArn }
             }));
 
             var apiGateway = new RestApi(this, "ProcessingServiceApi", new RestApiProps
