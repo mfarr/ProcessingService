@@ -1,5 +1,7 @@
 using Amazon.CDK;
 using Amazon.CDK.AWS.APIGateway;
+using Amazon.CDK.AWS.Events;
+using Amazon.CDK.AWS.Events.Targets;
 using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.Lambda;
 using Constructs;
@@ -17,12 +19,33 @@ namespace ProcessingService.Deployment
                 Handler = "ProcessingService.Api::ProcessingService.Api.Function::FunctionHandler",
                 Code = Code.FromAsset("./dist/ProcessingService.Api")
             });
-            
-            apiLamdbaFunction.AddToRolePolicy(new PolicyStatement(new PolicyStatementProps
+
+            var queueReportsFromScheduleLambda = new Function(this, "QueueReportsFromSchedule", new FunctionProps
             {
-                Actions = new []{ "dynamodb:Scan", "dynamodb:DescribeTable" },
-                Resources = new [] { dataStack.OrganizationScheduleTable.TableArn, dataStack.JobRunLogTable.TableArn }
-            }));
+                Runtime = Runtime.DOTNET_6,
+                Handler = "QueueReportsFromSchedule::QueueReportsFromSchedule.Function::FunctionHandler",
+                Code = Code.FromAsset("./dist/QueueReportsFromSchedule")
+            });
+
+            var dataStackPolicy = new PolicyStatement(new PolicyStatementProps
+            {
+                Actions = new[] {"dynamodb:Scan", "dynamodb:DescribeTable"},
+                Resources = new[] {dataStack.OrganizationScheduleTable.TableArn, dataStack.JobRunLogTable.TableArn}
+            });
+            
+            apiLamdbaFunction.AddToRolePolicy(dataStackPolicy);
+            
+            queueReportsFromScheduleLambda.AddToRolePolicy(dataStackPolicy);
+
+            var scheduleEvent = new Rule(this, "ScheduleEvent", new RuleProps
+            {
+                Schedule = Schedule.Cron(new CronOptions
+                {
+                    Minute = "*"
+                })
+            });
+            
+            scheduleEvent.AddTarget(new LambdaFunction(queueReportsFromScheduleLambda));
 
             var apiGateway = new RestApi(this, "ProcessingServiceApi", new RestApiProps
             {
