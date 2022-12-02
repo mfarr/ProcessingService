@@ -29,7 +29,7 @@ namespace ProcessingService.Deployment
 
             var dataStackPolicy = new PolicyStatement(new PolicyStatementProps
             {
-                Actions = new[] {"dynamodb:Scan", "dynamodb:DescribeTable"},
+                Actions = new[] {"dynamodb:Scan", "dynamodb:Query", "dynamodb:DescribeTable", "dynamodb:UpdateItem"},
                 Resources = new[] {dataStack.OrganizationScheduleTable.TableArn, dataStack.JobRunLogTable.TableArn}
             });
             
