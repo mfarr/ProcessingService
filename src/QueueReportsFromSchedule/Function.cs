@@ -21,18 +21,19 @@ public class Function
 
         DynamoDbContext = new DynamoDBContext(dynamoDbClient);
     }
-    
+
     /// <summary>
     /// A simple function that takes a string and does a ToUpper
     /// </summary>
-    /// <param name="input"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public async Task FunctionHandler(string input, ILambdaContext context)
+    public async Task FunctionHandler(ILambdaContext context)
     {
         var currentTime = DateTime.Now;
 
         var upcomingSchedules = await GetUpcomingSchedulesAsync(currentTime);
+        
+        await ProcessSchedules(upcomingSchedules);
     }
 
     private async Task<IEnumerable<OrganizationSchedule>> GetUpcomingSchedulesAsync(DateTime fromDate)
@@ -50,5 +51,29 @@ public class Function
         var documents = await result.GetRemainingAsync();
 
         return DynamoDbContext.FromDocuments<OrganizationSchedule>(documents);
+    }
+
+    private async Task ProcessSchedules(IEnumerable<OrganizationSchedule> schedules)
+    {
+        foreach (var schedule in schedules)
+        {
+            var runLog = new JobRunLog
+            {
+                Status = "complete",
+                CompletionDate = DateTimeOffset.Now.ToUnixTimeSeconds(),
+                RunDate = DateTimeOffset.Now.ToUnixTimeSeconds(),
+                OrganizationSchedule = $"{schedule.OrganizationId}#{ScheduleType}"
+            };
+
+            var timeNow = DateTime.Now;
+            
+            schedule.LastRun = timeNow;
+            
+            schedule.NextRun = timeNow.AddMinutes(schedule.IntervalMinutes);
+
+            await DynamoDbContext.SaveAsync(schedule);
+
+            await DynamoDbContext.SaveAsync(runLog);
+        }
     }
 }
