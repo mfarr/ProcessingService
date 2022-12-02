@@ -8,15 +8,15 @@ public class OrganizationSchedule
     [DynamoDBIgnore]
     public const string TableName = "OrganizationSchedule";
 
-    [DynamoDBIgnore] public const string PartitionKey = "OrganizationId";
+    [DynamoDBIgnore] public const string PartitionKey = "ScheduleType";
 
-    [DynamoDBIgnore] public const string SortKey = "ScheduleType";
+    [DynamoDBIgnore] public const string SortKey = "OrganizationId";
     
     [DynamoDBHashKey]
-    public string OrganizationId { get; set; }
+    public string ScheduleType { get; set; }
     
     [DynamoDBRangeKey]
-    public string ScheduleType { get; set; }
+    public string OrganizationId { get; set; }
     
     public int IntervalMinutes { get; set; }
     
