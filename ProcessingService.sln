@@ -16,17 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lambda", "Lambda", "{C0FCD7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessingService.Deployment", "src\ProcessingService.Deployment\ProcessingService.Deployment.csproj", "{71BA7948-CC59-4D53-AF85-40743EC1C940}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessingService.Api", "src\ProcessingService.Api\ProcessingService.Api.csproj", "{71E85A6D-2DC1-4001-9FD6-FAF80CDA22F6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{552FAB77-AAA0-441B-A4B3-D683FAE8A425}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessingService.Api.Test", "test\ProcessingService.Api.Test\ProcessingService.Api.Test.csproj", "{9CCB5BA6-7847-47DD-95D4-C57D1446D911}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessingService.Common", "ProcessingService.Common\ProcessingService.Common.csproj", "{6AEA8D4D-FECC-4934-8BC6-2928D2A9F3BA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueReportsFromSchedule", "src\QueueReportsFromSchedule\QueueReportsFromSchedule.csproj", "{D1AE5426-15AF-4C1D-9846-71D9DE4B903D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueReportsFromSchedule.Test", "test\QueueReportsFromSchedule.Tests\QueueReportsFromSchedule.Test.csproj", "{A6456918-6FD5-4222-89E0-0A720DA61011}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApi", "ClientApi\src\ClientApi\ClientApi.csproj", "{6A0E4D04-F13A-49A9-9BBE-E3799F57425E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,14 +36,6 @@ Global
 		{71BA7948-CC59-4D53-AF85-40743EC1C940}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71BA7948-CC59-4D53-AF85-40743EC1C940}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71BA7948-CC59-4D53-AF85-40743EC1C940}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71E85A6D-2DC1-4001-9FD6-FAF80CDA22F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71E85A6D-2DC1-4001-9FD6-FAF80CDA22F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71E85A6D-2DC1-4001-9FD6-FAF80CDA22F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71E85A6D-2DC1-4001-9FD6-FAF80CDA22F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CCB5BA6-7847-47DD-95D4-C57D1446D911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CCB5BA6-7847-47DD-95D4-C57D1446D911}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CCB5BA6-7847-47DD-95D4-C57D1446D911}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CCB5BA6-7847-47DD-95D4-C57D1446D911}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6AEA8D4D-FECC-4934-8BC6-2928D2A9F3BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6AEA8D4D-FECC-4934-8BC6-2928D2A9F3BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AEA8D4D-FECC-4934-8BC6-2928D2A9F3BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -58,15 +48,18 @@ Global
 		{A6456918-6FD5-4222-89E0-0A720DA61011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6456918-6FD5-4222-89E0-0A720DA61011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6456918-6FD5-4222-89E0-0A720DA61011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A0E4D04-F13A-49A9-9BBE-E3799F57425E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A0E4D04-F13A-49A9-9BBE-E3799F57425E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A0E4D04-F13A-49A9-9BBE-E3799F57425E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A0E4D04-F13A-49A9-9BBE-E3799F57425E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{71E85A6D-2DC1-4001-9FD6-FAF80CDA22F6} = {C0FCD766-1165-473B-9159-20A2CD9ABC25}
-		{9CCB5BA6-7847-47DD-95D4-C57D1446D911} = {552FAB77-AAA0-441B-A4B3-D683FAE8A425}
 		{D1AE5426-15AF-4C1D-9846-71D9DE4B903D} = {C0FCD766-1165-473B-9159-20A2CD9ABC25}
 		{A6456918-6FD5-4222-89E0-0A720DA61011} = {552FAB77-AAA0-441B-A4B3-D683FAE8A425}
+		{6A0E4D04-F13A-49A9-9BBE-E3799F57425E} = {C0FCD766-1165-473B-9159-20A2CD9ABC25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C97A23A9-FB30-4997-A0B3-2C28E7ADD83D}

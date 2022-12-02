@@ -1,6 +1,6 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Publish All" type="CompoundRunConfigurationType">
-    <toRun name="Publish ProcessingService.Api" type="DotNetFolderPublish" />
+    <toRun name="Publish ClientApi" type="DotNetFolderPublish" />
     <toRun name="Publish QueueReportsFromSchedule" type="DotNetFolderPublish" />
     <method v="2" />
   </configuration>

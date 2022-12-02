@@ -57,11 +57,17 @@ public class Function
     {
         foreach (var schedule in schedules)
         {
+            var runDate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            
+            // DO TASK!
+
+            var completionDate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            
             var runLog = new JobRunLog
             {
                 Status = "complete",
-                CompletionDate = DateTimeOffset.Now.ToUnixTimeSeconds(),
-                RunDate = DateTimeOffset.Now.ToUnixTimeSeconds(),
+                CompletionDate = completionDate,
+                RunDate = runDate,
                 OrganizationSchedule = $"{schedule.OrganizationId}#{ScheduleType}"
             };
 

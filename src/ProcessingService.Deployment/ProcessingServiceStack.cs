@@ -13,18 +13,20 @@ namespace ProcessingService.Deployment
         internal ProcessingServiceStack(Construct scope, string id, ProcessingServiceDataStack dataStack, IStackProps props = null) 
             : base(scope, id, props)
         {
-            var apiLamdbaFunction = new Function(this, "ApiLambdaFunction", new FunctionProps
+            var apiLamdbaFunction = new Function(this, "ClientApi", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_6,
-                Handler = "ProcessingService.Api::ProcessingService.Api.Function::FunctionHandler",
-                Code = Code.FromAsset("./dist/ProcessingService.Api")
+                Handler = "ClientApi::ClientApi.LambdaEntryPoint::FunctionHandlerAsync",
+                Code = Code.FromAsset("./dist/ClientApi"),
+                Timeout = Duration.Seconds(30)
             });
 
             var queueReportsFromScheduleLambda = new Function(this, "QueueReportsFromSchedule", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_6,
                 Handler = "QueueReportsFromSchedule::QueueReportsFromSchedule.Function::FunctionHandler",
-                Code = Code.FromAsset("./dist/QueueReportsFromSchedule")
+                Code = Code.FromAsset("./dist/QueueReportsFromSchedule"),
+                Timeout = Duration.Seconds(30)
             });
 
             var dataStackPolicy = new PolicyStatement(new PolicyStatementProps
@@ -49,7 +51,7 @@ namespace ProcessingService.Deployment
 
             var apiGateway = new RestApi(this, "ProcessingServiceApi", new RestApiProps
             {
-                RestApiName = "ProcessingServiceApi",
+                RestApiName = "ClientApi",
                 Description = "API for Tessitura Processing Service",
                 DeployOptions = new StageOptions
                 {
@@ -62,11 +64,11 @@ namespace ProcessingService.Deployment
                 CloudWatchRole = true
             });
 
-            apiGateway.Root.AddMethod("GET", new LambdaIntegration(apiLamdbaFunction,
-                new LambdaIntegrationOptions
-                {
-                    Proxy = true
-                }));
+            apiGateway.Root.AddProxy(new ProxyResourceProps
+            {
+                AnyMethod = true,
+                DefaultIntegration = new LambdaIntegration(apiLamdbaFunction)
+            });
             
             new CfnOutput(this, "ApiGatewayEndpoint", new CfnOutputProps
             {
