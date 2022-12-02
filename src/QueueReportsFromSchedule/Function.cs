@@ -11,7 +11,7 @@ namespace QueueReportsFromSchedule;
 
 public class Function
 {
-    public readonly DynamoDBContext DynamoDbContext;
+    private readonly DynamoDBContext _dynamoDbContext;
     
     public const string ScheduleType = "QueueReportsFromSchedule";
     
@@ -19,7 +19,7 @@ public class Function
     {
         var dynamoDbClient = new AmazonDynamoDBClient();
 
-        DynamoDbContext = new DynamoDBContext(dynamoDbClient);
+        _dynamoDbContext = new DynamoDBContext(dynamoDbClient);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class Function
 
     private async Task<IEnumerable<OrganizationSchedule>> GetUpcomingSchedulesAsync(DateTime fromDate)
     {
-        var table = DynamoDbContext.GetTargetTable<OrganizationSchedule>();
+        var table = _dynamoDbContext.GetTargetTable<OrganizationSchedule>();
 
         var filter = new QueryFilter();
         
@@ -50,7 +50,7 @@ public class Function
 
         var documents = await result.GetRemainingAsync();
 
-        return DynamoDbContext.FromDocuments<OrganizationSchedule>(documents);
+        return _dynamoDbContext.FromDocuments<OrganizationSchedule>(documents);
     }
 
     private async Task ProcessSchedules(IEnumerable<OrganizationSchedule> schedules)
@@ -71,9 +71,9 @@ public class Function
             
             schedule.NextRun = timeNow.AddMinutes(schedule.IntervalMinutes);
 
-            await DynamoDbContext.SaveAsync(schedule);
+            await _dynamoDbContext.SaveAsync(schedule);
 
-            await DynamoDbContext.SaveAsync(runLog);
+            await _dynamoDbContext.SaveAsync(runLog);
         }
     }
 }
